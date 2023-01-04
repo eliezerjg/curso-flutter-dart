@@ -26,7 +26,7 @@ class  HomePage extends StatefulWidget {
 }
 
 bool get isFree => count! > 0;
-bool get isFull => count! > 15;
+bool get isFull => count! >= 15;
 
 
 class _HomePageState extends State<HomePage> {
@@ -73,24 +73,26 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
              Text(
-              !isFull && count != null ? 'Pode Entrar' : '',
+              !isFull && count != null ? 'Pode Entrar' : 'Lotado !!',
               style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: isFull ? Colors.red : Colors.white,
               ),
             ),
             Padding(
                 padding: EdgeInsets.all(80),
                 child: Text(
                   '$count',
-                  style: TextStyle(fontSize: 80, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 80,
+                      color: isFull ? Colors.red : Colors.white),
                 )),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: decrement,
+                  onPressed: isFree ?  decrement : null,
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.orange,
                     fixedSize: const Size(150, 100),
@@ -103,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(width: 40),
                 TextButton(
-                  onPressed: increment,
+                  onPressed: isFull ? null : increment,
                   style: TextButton.styleFrom(backgroundColor: Colors.orange,
                     fixedSize: const Size(150, 100),
                     foregroundColor: Colors.black,
