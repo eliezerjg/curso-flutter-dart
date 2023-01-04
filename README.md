@@ -5,3 +5,7 @@ https://www.udemy.com/course/curso-completo-flutter-app-android-io
 
 Projeto 1:
 -> Contador para sorveteria afim de evitar a aglomeração
+
+
+PS:
+Não foi incluido .gitignore... o projeto é para fins de estudo
