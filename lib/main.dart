@@ -1,34 +1,125 @@
 import 'package:flutter/material.dart';
+int? count;
 
 void main() {
-  runApp(const MyApp());
+  count = 0;
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget{
-  const MyApp({Key? key}) : super(key:key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage()
+    return MaterialApp(
+      home: HomePage(key: UniqueKey()),
+      debugShowCheckedModeBanner: false,
     );
   }
-
 }
 
-class HomePage extends StatelessWidget{
-  const HomePage({Key? key}) : super(key:key);
+class  HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+bool get isFree => count! > 0;
+bool get isFull => count! > 15;
+
+
+class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+
+
+    void decrement() {
+      int contador = count!;
+      if(isFree) {
+        setState(() {
+          count = contador - 1;
+        });
+      }
+      print('decrement $count');
+
+    }
+
+    void increment() {
+      int contador = count!;
+
+      if(contador < 15) {
+        setState(() {
+          count = contador + 1;
+        });
+      }
+      print('increment $count');
+    }
+
+
+
     // TODO: implement build
-   return Container(
-     color:Colors.black,
-     alignment: Alignment.center,
-     child: const  Text('Olá mundo !'),
-
-   );
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/sorvete.png'),
+              fit: BoxFit.cover,
+            )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+             Text(
+              !isFull && count != null ? 'Pode Entrar' : '',
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            Padding(
+                padding: EdgeInsets.all(80),
+                child: Text(
+                  '$count',
+                  style: TextStyle(fontSize: 80, color: Colors.white),
+                )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: decrement,
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    fixedSize: const Size(150, 100),
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24)),
+                  ),
+                  child: Text('Saiu',
+                      style: TextStyle(color: Colors.white, fontSize: 35)),
+                ),
+                const SizedBox(width: 40),
+                TextButton(
+                  onPressed: increment,
+                  style: TextButton.styleFrom(backgroundColor: Colors.orange,
+                    fixedSize: const Size(150, 100),
+                    foregroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24)),
+                  ),
+                  child: const Text(
+                    'Entrou',
+                    style: TextStyle(color: Colors.white, fontSize: 35),
+                  ),
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
-
-
 }
